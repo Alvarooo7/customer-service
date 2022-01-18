@@ -41,6 +41,12 @@ the response should be:
  }
 ]
 ```
++ For import Postman Collection [postman_collection.json](./src/main/resources/static/postman_collection.json)
+
+##### Swagger YML Documentation
+
++ Swagger Customer Service [customer-service.yml](./src/main/resources/static/customer-service.yaml)
+
 
 >Note: Review Code in Develop Branch
 
