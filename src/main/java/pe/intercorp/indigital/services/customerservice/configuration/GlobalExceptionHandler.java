@@ -1,5 +1,6 @@
 package pe.intercorp.indigital.services.customerservice.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.codec.DecodingException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +17,7 @@ import javax.validation.ConstraintViolationException;
 
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({
@@ -29,7 +31,7 @@ public class GlobalExceptionHandler {
     public ErrorMessage invalidRequest(Exception ex) {
         return ErrorMessage.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message("La petición es inválida. Por favor, validar request.\n " + ex.getLocalizedMessage())
+                .message("Request Invalidad. Please, validate request.\n " + ex.getLocalizedMessage())
                 .build();
     }
 
@@ -40,9 +42,10 @@ public class GlobalExceptionHandler {
     })
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErrorMessage invalidEntityContent(Exception ex) {
+        log.error(ex.getLocalizedMessage());
         return ErrorMessage.builder()
                 .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
-                .message(ex.getLocalizedMessage())
+                .message("The data provided in the request is not processable by the server")
                 .build();
     }
 }

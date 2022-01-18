@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "6e40aab7-691a-4f68-ab66-6e7eb0638480",
+		"name": "Customer Service API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Alvaro\",\r\n    \"lastName\" : \"Rojas Fernandez\",\r\n    \"identificationNumber\" : \"72564678\",\r\n    \"email\" : \"arojas@gmail.com\",\r\n    \"birthDate\" : \"1999-01-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/customer-service/v1/customers",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"customer-service",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/customer-service/v1/customers?identificationNumber=72964256&email=sazura@gmail.com",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"customer-service",
+						"v1",
+						"customers"
+					],
+					"query": [
+						{
+							"key": "identificationNumber",
+							"value": "72964256"
+						},
+						{
+							"key": "email",
+							"value": "sazura@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Customer Quantity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/customer-service/v1/customers/reports?reportType=1&periodType=M",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"customer-service",
+						"v1",
+						"customers",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "reportType",
+							"value": "1"
+						},
+						{
+							"key": "periodType",
+							"value": "M"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Customer Quantity Max Period",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/customer-service/v1/customers/reports?reportType=1&periodType=M&sort=desc&limit=1",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"customer-service",
+						"v1",
+						"customers",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "reportType",
+							"value": "1"
+						},
+						{
+							"key": "periodType",
+							"value": "M"
+						},
+						{
+							"key": "sort",
+							"value": "desc"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Customer Quantity Min Period Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/customer-service/v1/customers/reports?reportType=1&periodType=M&sort=asc&limit=1",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"customer-service",
+						"v1",
+						"customers",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "reportType",
+							"value": "1"
+						},
+						{
+							"key": "periodType",
+							"value": "M"
+						},
+						{
+							"key": "sort",
+							"value": "asc"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Customer Birth Rate By Period",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/customer-service/v1/customers/reports?reportType=2",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"customer-service",
+						"v1",
+						"customers",
+						"reports"
+					],
+					"query": [
+						{
+							"key": "reportType",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -7,17 +7,10 @@ import pe.intercorp.indigital.services.customerservice.model.entity.Customer;
 import pe.intercorp.indigital.services.customerservice.repository.CustomerRepository;
 import pe.intercorp.indigital.services.customerservice.service.CustomerService;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,29 +34,10 @@ import static pe.intercorp.indigital.services.customerservice.utils.Constants.SO
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
-    private final EntityManager em;
 
     @Override
     public Customer create(Customer customer) {
-        if (existsCustomerByIdentificationOrEmail(customer.getIdentificationNumber(), customer.getEmail()))
-            throw new EntityExistsException("El cliente ya ha sido registrado");
         return repository.save(customer);
-    }
-
-    Boolean existsCustomerByIdentificationOrEmail(String identificationNumber, String email) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
-
-        Root<Customer> customer = cq.from(Customer.class);
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(cb.or(
-                cb.equal(customer.get("identificationNumber"), identificationNumber),
-                cb.equal(customer.get("email"), email)));
-
-        cq.where(predicates.toArray(new Predicate[0]));
-
-        return !em.createQuery(cq).getResultList().isEmpty();
     }
 
     @Override
