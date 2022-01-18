@@ -1,0 +1,255 @@
+swagger: '2.0'
+info:
+  description: API para apoyar en las operaciones asociadas a los clientes de la empresa.
+  version: 1.0.0
+  title: Customer Service
+host: localhost:8080
+basePath: /
+tags:
+  - name: Customer
+    description: >-
+      Funcionalidad que permite realizar el registro y consultar los datos de
+      los clientes.
+paths:
+  /customer-service/v1.0/customers:
+    get:
+      tags:
+        - Customer
+      summary: Funcionalidad que permite realizar la consulta de los clientes.
+      description: "# Implementation Notes\r\n\r\n### Acerca de la funcionalidad expuesta\r\n\r\nPermite obtener la información completa del cliente de nuestra empresa.\r\n\r\n### URI de acceso a la API\r\n\r\n| Método | URI |\r\n|--------|-------------|\r\n|GET |         /customer-service/v1.0/customers?identificationNumber={identificationNumber}&email={email}\r\n\r\n<br/>\r\n\r\n\n\r\n### Query parameters\r\n\r\n| Resultado esperado                                                 | Path param  | Query parameters requerido  |Query parameters opcionales |Query param extrafields |\r\n|--------------------------------------------------------------------|-------------|-----------------------------|----------------------------|------------------------|\r\n| Se obtienen los clientes.  |      -      |       -           |       identificationNumber, periodType        |             -          |\r\n\r\n<br/>"
+      operationId: customerGET
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          description: Tipo de Contenido
+          required: false
+          type: string
+        - name: identificationNumber
+          in: query
+          description: Numero de Identificación
+          required: false
+          type: string
+        - name: email
+          in: query
+          description: Correo del Cliente
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CustomerResponse'
+        '400':
+          description: Se enviaron datos incorrectos.
+          schema:
+            $ref: '#/definitions/Exception_400_CustomerReport'
+        '500':
+          description: Error al realizar la consulta de datos.
+          schema:
+            $ref: '#/definitions/Exception_500_CustomerReport'
+      deprecated: false
+    post:
+      tags:
+        - Customer
+      summary: Funcionalidad que permite realizar el registro de los clientes.
+      description: "# Implementation Notes\r\n\r\n### Acerca de la funcionalidad expuesta\r\n\r\nPermite registrar la información completa del cliente de nuestra empresa.\r\n\r\n### URI de acceso a la API\r\n\r\n| Método | URI |\r\n|--------|-------------|\r\n|POST |         /customer-service/v1.0/customers\r\n\r\n<br/>"
+      operationId: postApplicationsInboxUsing2GET
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          description: Tipo de Contenido
+          required: false
+          type: string
+        - in: body
+          name: body
+          description: Cliente a Registrar
+          required: true
+          schema:
+            $ref: '#/definitions/CustomerRequest'
+      responses:
+        '201':
+          description: Creado
+          schema:
+            $ref: '#/definitions/Customer'
+        '400':
+          description: Se enviaron datos incorrectos.
+          schema:
+            $ref: '#/definitions/Exception_400_CustomerReport'
+        '422':
+          description: Entidad No procesable.
+          schema:
+            $ref: '#/definitions/Exception_422_CustomerReport'
+        '500':
+          description: Error al realizar la consulta de datos.
+          schema:
+            $ref: '#/definitions/Exception_500_CustomerReport'
+      deprecated: false
+  /customer-service/v1.0/customers/reports:
+    get:
+      tags:
+        - Customer
+      summary: >-
+        Funcionalidad que permite realizar la consulta de los reportes de los
+        clientes.
+      description: "# Implementation Notes\r\n\r\n### Acerca de la funcionalidad expuesta\r\n\r\nPermite obtener la información completa de los reportes de los clientes de nuestra empresa.\r\n\r\n### URI de acceso a la API\r\n\r\n| Método | URI |\r\n|--------|-------------|\r\n|GET |         /customer-service/v1.0/customers?reportType={reportType}&periodType={periodType}\r\n\r\n<br/>\r\n\r\n\n\r\n### Query parameters\r\n\r\n| Resultado esperado                                                 | Path param  | Query parameters requerido  |Query parameters opcionales |Query param extrafields |\r\n|--------------------------------------------------------------------|-------------|-----------------------------|----------------------------|------------------------|\r\n| Se obtienen los clientes.  |      -      |       reportType           |       periodType        |             -          |\r\n\r\n<br/>\r\n\r\n### Lista de valores usados en esta versión de la API\r\n\r\nPara 'reportType' se encuentran los posibles valores en la siguiente tabla :\r\n\r\n| Valor | Descripción           |\r\n|-------|-----------------------|\r\n| 1     | Consulta Cantidad Clientes      |\r\n| 2     | Consulta Natalidad                   |\r\n\r\nPara 'periodType' se encuentran los posibles valores en la siguiente tabla :\r\n\r\n| Valor | Descripción           |\r\n|-------|-----------------------|\r\n| M     | Mes      |\r\n| Y     | Año                   |\r\n\r\n<br/>"
+      operationId: getCustomerReports
+      produces:
+        - application/json
+      parameters:
+        - name: Content-Type
+          in: header
+          description: Tipo de Contenido
+          required: false
+          type: string
+        - name: reportType
+          in: query
+          description: Tipo de Reporte
+          required: true
+          type: string
+        - name: periodType
+          in: query
+          description: Tipo de Periodo
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/CustomerReport'
+        '400':
+          description: Se enviaron datos incorrectos.
+          schema:
+            $ref: '#/definitions/Exception_400_CustomerReport'
+        '500':
+          description: Error al realizar la consulta de datos.
+          schema:
+            $ref: '#/definitions/Exception_500_CustomerReport'
+      deprecated: false
+definitions:
+  CustomerResponse:
+    type: array
+    items:
+      $ref: '#/definitions/Customer'
+    title: CustomerReportResponse
+  Customer:
+    type: object
+    properties:
+      id:
+        type: number
+        example: 1
+        description: Identificador del cliente
+      name:
+        type: string
+        example: Jorge
+        description: Nombre del cliente
+      lastname:
+        type: string
+        example: Perez Carpio
+        description: Apellido del cliente
+      identificationNumber:
+        type: string
+        example: '12345678'
+        description: Número de documento de identidad del cliente
+      email:
+        type: string
+        example: jorge@gmail.com
+        description: Correo del cliente
+      birthDate:
+        type: string
+        example: '1971-02-01'
+        description: Fecha de nacimiento del cliente
+      createDate:
+        type: string
+        example: '2022-01-16'
+        description: Fecha de registro del cliente
+    title: Customer
+  CustomerRequest:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Jorge
+        description: Nombre del cliente
+      lastname:
+        type: string
+        example: Perez Carpio
+        description: Apellido del cliente
+      identificationNumber:
+        type: string
+        example: '12345678'
+        description: Número de documento de identidad del cliente
+      email:
+        type: string
+        example: jorge@gmail.com
+        description: Correo del cliente
+      birthDate:
+        type: string
+        example: '1971-02-01'
+        description: Fecha de nacimiento del cliente
+    title: CustomerRequest
+  CustomerReport:
+    type: object
+    properties:
+      JANUARY:
+        type: string
+        example: '5'
+        description: Valor del periodo determindado
+      FEBRUARY:
+        type: string
+        example: '5'
+        description: Valor del periodo determindado
+      MARCH:
+        type: string
+        example: '5'
+        description: Valor del periodo determindado
+      APRIL:
+        type: string
+        example: '5'
+        description: Valor del periodo determindado
+    title: Customer
+  Exception_400_CustomerReport:
+    type: object
+    discriminator: Datos del error de sistema.
+    properties:
+      status:
+        type: number
+        example: '400'
+        description: Código de error de Sistema
+      message:
+        type: string
+        example: Invalid Request.
+        description: Descripción del error de Sistema
+    title: Exception_400_CustomerReport
+    description: Datos del error de sistema.
+  Exception_422_CustomerReport:
+    type: object
+    discriminator: Datos del error de sistema.
+    properties:
+      status:
+        type: number
+        example: '422'
+        description: Código de error de Sistema
+      message:
+        type: string
+        example: Unprocessable Entity.
+        description: Descripción del error de Sistema
+    title: Exception_400_CustomerReport
+    description: Datos del error de sistema.
+  Exception_500_CustomerReport:
+    type: object
+    discriminator: Datos del error de sistema.
+    properties:
+      status:
+        type: number
+        example: '500'
+        description: Código de error de Sistema
+      message:
+        type: string
+        example: Internal Server Error
+        description: Descripción del error de Sistema
+    title: Exception_500_CustomerReport
+    description: Datos del error de sistema.
